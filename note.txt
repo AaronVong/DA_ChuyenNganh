@@ -1,0 +1,13 @@
+- DbService chưa có exeption.
+- "xem tất cả" chưa có url
+- trong DB chỉ có sản phẩm loại "phone".
+- chưa có chi tiết sản phẩm trong DB.
+- trang loại sản phẩm (category.php) chưa được style lại
+- các biến còn lộn xộn => chưa quản lý được data lấy từ DB.
+- tông màu website chưa được tốt.
+- Banner Carousel và News là dữ liệu tĩnh.
+- chưa có sản phẩm liên quan, bình luận, đánh giá, trong phần chi tiết sản phẩm
+- giỏ hàng chưa có
+- thanh tìm kiếm chưa có chức năng
+- cần style lại trang chi tiết sản phẩm.
+- Button mua ngay và giỏ hàng chưa có chức năng
