@@ -76,7 +76,7 @@
                 if($sale>0){
             ?>
             <span class="product__price--old"><?php echo "<script>document.write(stringToMoney(".$productDetail[0]["product_originprice"]."));</script>";?></span>
-            <span class="product__sale"><?php echo $sale*100; ?>%</span>
+            <span class="product__sale">Giảm <?php echo $sale*100*-1; ?>%</span>
             <?php
                 }
             ?>
@@ -98,11 +98,10 @@
             </ul>
           </div>
           <div class="detail__action">
-            <a href="#" class="pay-btn links">
-                <span>Mua Ngay</span>
+            <a href="order.php" class="pay-btn links" name="">
+                <span>Đặt Ngay</span>
             </a>
-
-            <a href="#" class="cart-btn links">
+            <a class="cart-btn links" name="addToCart">
                 <span>thêm vào giỏ hàng</span>
             </a>
           </div>

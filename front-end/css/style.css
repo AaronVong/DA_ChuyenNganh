@@ -393,6 +393,7 @@ ul {
 }
 
 .product {
+  position: relative !important;
   /* flex-basis: calc(100% / 4); */
   border-bottom: 1px solid silver;
   overflow: hidden;
@@ -495,6 +496,12 @@ ul {
 
 .products-carousel__items .links--product span {
   padding: 0.5em;
+}
+
+@media (max-width: 400px) {
+  .slick-arrow {
+    display: none !important;
+  }
 }
 
 /* ========== Home Screen ========== */
@@ -754,6 +761,146 @@ ul {
   }
 }
 
+/* ========== Cart ========== */
+.cart-screen {
+  border: 1px solid black;
+  width: 100%;
+  padding: 1em;
+}
+
+.order-detail {
+  position: relative;
+  width: 100%;
+  border: 1px solid #333;
+  margin-bottom: 15px;
+  padding: 1em;
+}
+
+.order-detail h5 {
+  text-transform: capitalize;
+  padding: 0.5em 0;
+}
+
+.order-detail .order {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 0.5em;
+}
+
+.btn--rmorder {
+  position: absolute;
+  right: 1em;
+  top: 1em;
+  height: auto;
+  width: auto;
+  background-color: transparent;
+  border-radius: unset;
+  color: #333;
+  text-align: center;
+}
+
+.btn--rmorder:hover {
+  background-color: unset;
+  color: black;
+}
+.order__thumb {
+  width: 100px;
+  height: 100px;
+}
+
+.order__thumb img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.order__info .label {
+  text-transform: capitalize;
+  font-weight: 500;
+}
+.order__info .label .input {
+  padding-right: 0;
+}
+.order__price {
+  display: block;
+  padding: 1em 0;
+  font-weight: bold;
+  font-size: 22px;
+  text-align: right;
+}
+
+.payment {
+  width: 100%;
+  border: 1px solid black;
+  padding: 1em;
+}
+
+.payment__row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.payment__row span:first-child {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.payment__row span {
+  padding: 0.5rem 0;
+}
+
+/* ========== Order Form ========== */
+.order__form {
+  display: none;
+  border: 1px solid black;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.order__form h3 {
+  padding: 1em;
+  text-align: center;
+}
+
+.order__form .input-group {
+  display: flex;
+  padding: 1em;
+}
+.order__form .input-group:last-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.order__form .input-group .label {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  width: 160px;
+  padding: 0.5em 0;
+}
+
+#address {
+  display: none;
+}
+
+.order__form .input-group .label span {
+  padding: 0 1em;
+}
+
+.order__form .input-group input {
+  border: 1px solid black;
+  padding: 5px 0.5em;
+  height: 30px;
+}
+
+.order__form .input-group input[type="text"] {
+  width: 100%;
+}
+
+.required {
+  color: red;
+  font-weight: bold;
+}
 /* ========== Footer ========== */
 #footer {
   height: 100%;

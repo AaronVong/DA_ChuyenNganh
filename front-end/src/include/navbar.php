@@ -17,12 +17,10 @@
       <i class="search__icon fas fa-search"></i>
     </li>
     <li class="cart">
-      <a href="#" class="links links--cart" href="#asd">
+      <a href="order.php" class="links links--cart" href="#asd">
         <span>Giỏ hàng</span>
         <i class="cart__icon fas fa-shopping-cart"></i>
       </a>
-    </li>
-    <li>
     </li>
     <button type="button" class="hamburger">
       <i class="fas fa-bars"></i>

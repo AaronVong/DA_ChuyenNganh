@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./front-end/css/style.css">
+    <script src="https://kit.fontawesome.com/d210984464.js" crossorigin="anonymous"></script>
+    <script src="./front-end/js/functions.js"></script>
+    <script src="./front-end/js/jquery-3.5.0.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <?php 
+        require "./back-end/DbServices.php";
+    ?>
+        <div class="container container--biggest">
+        <header id="header">
+            <?php include "./front-end/src/include/navbar.php" ?>
+        </header>
+        <main id="main">
+        <?php include "./front-end/src/screen/orderscreen.php";?>
+        </main>
+        <footer id="footer"></footer>
+    </div>
+</body>
+</html>

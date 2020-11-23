@@ -13,7 +13,7 @@
           ?>
             <div>
               <span class="product__price--old"><?php echo "<script>document.write(stringToMoney(".$product["product_originprice"]."));</script>";?></span>
-              <span class="product__sale"><?php echo ($product["product_sale"]*100)."%";?></span>
+              <span class="product__sale"><?php echo ($product["product_sale"]*100*-1)."%";?></span>
             </div>
           <?php 
             }
