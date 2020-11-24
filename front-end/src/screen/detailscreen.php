@@ -1,12 +1,12 @@
 <?php 
   if(isset($_GET["pid"])){
     $pid = $_GET["pid"];
-    $service = new DbServices();
-    $productDetail = $service->getProductById($pid);
+    $_product = new Product();
+    $productDetail = $_product->getProductById($pid);
     if(count($productDetail)<=0){
-      die("<h1>Không có kết quả phù hợp</h1>");
+      exit("<h1>Không có kết quả phù hợp</h1>");
     }
-  }else die("<h1>Trang Không tồn tại!</h1>");
+  }else exit("<h1>Trang Không tồn tại!</h1>");
 ?>
 <div class="detail-screen">
     <div class="detail">

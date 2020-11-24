@@ -3,8 +3,10 @@
     define("DB_USER","root");
     define("DB_PASSWORD","");
     define("DB_NAME","technow");
+    // PDO Attributes
+    define("PDOATTRS", [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    ])
 
-    function getDSN($host=DB_HOST, $db_name=DB_NAME){
-        return "mysql:host=$host;dbname=$db_name";
-    }
 ?>

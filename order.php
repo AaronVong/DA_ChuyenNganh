@@ -11,7 +11,7 @@
 </head>
 <body>
     <?php 
-        require "./back-end/DbServices.php";
+        require "./back-end/Category_class.php";
     ?>
         <div class="container container--biggest">
         <header id="header">

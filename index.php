@@ -15,10 +15,12 @@
 
 <body>
     <?php 
-        require "./back-end/DbServices.php";
+        require "./back-end/Product_class.php";
+        require "./back-end/Category_class.php";
+        
           if(count($_GET)===0){
-            $service = new DbServices();
-            $products=$service->getHighLightProducts();
+            $_product = new Product();
+            $products=$_product->getHighLightProducts();
         }
     ?>
     <div class="container container--biggest">

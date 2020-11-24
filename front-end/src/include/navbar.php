@@ -1,6 +1,6 @@
 <?php
-  $service = new DbServices();
-  $cats = $service->getAllCategories();
+  $_category = new Category();
+  $cats = $_category->getAllCategories();
 ?>
 
 <nav class="nav">
@@ -35,7 +35,7 @@
         continue;
       } ?>
       <li class="items sfloor__items">
-        <a href="<?php echo "category.php?type=".$cat["category_name"] ?>" class="links links--items" name="<?php echo $cat["category_name"];?>">
+        <a href="<?php echo "category.php?type=".$cat["category_id"] ?>" class="links links--items" name="<?php echo $cat["category_name"];?>">
         <?php 
           switch($cat["category_name"]){
             case "phone":

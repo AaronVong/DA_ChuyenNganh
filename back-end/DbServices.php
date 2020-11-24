@@ -1,45 +1,43 @@
 <?php 
-    require "./back-end/DbVariables.php";
+    require_once "./back-end/DbVariables.php";
 
     class DbServices{
         private $pdo=null;
-
         function __construct(){
             if($this->pdo==null){
-                $this->pdo = new PDO(getDSN(), DB_USER, DB_PASSWORD);
+               try{
+                    $this->pdo = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME,DB_USER, DB_PASSWORD, PDOATTRS);
+               }catch(PDOException $exception){
+                    echo $exception->getMessage();
+               } 
             }
         }
-        function getAllProductsByCategory($type){
-            $query = "CALL getAllProductsByCategory(?);";
+
+        function executeQuery($query, $params=[], $fetchMode=PDO::FETCH_ASSOC){
+            // for SELECT, COUNT,... the staments fetch data from DB
+            if($this->pdo===null){
+                die("Oops! Không kết nối được với Cơ Sở Dữ Liệu");
+            }
             $stament = $this->pdo->prepare($query);
-            $stament->execute([$type]);
-            $rs = $stament->fetchAll(PDO::FETCH_ASSOC);
-            return $rs;
+            return $stament->execute($params)?$stament->fetchAll($fetchMode):null;
+            // return Associative Array on SUCCESS or null if FAIL
         }
 
-        function getHighlightProducts(){
-            $query = "CALL getHighLightProducts();";
+        function executeChangeDataQuery($query, $params=[], $fetchMode=PDO::FETCH_ASSOC){
+            // for INSERT, UPDATE,... the staments that making change to the DB
+            if($this->pdo===null){
+                die("Oops! Không kết nối được với Cơ Sở Dữ Liệu");
+            }
             $stament = $this->pdo->prepare($query);
-            $stament->execute();
-            $rs = $stament->fetchAll(PDO::FETCH_ASSOC);
-            return $rs;
-        }
+            return  $stament->execute($params)?$stament->rowCount():null;
+            // 0 for FAIL and POSITIVE number for SUCCESS
 
-        function getAllCategories(){
-            $query = "CALL getAllCategories();";
-            $stament = $this->pdo->prepare($query);
-            $stament->execute();
-            $rs = $stament->fetchAll(PDO::FETCH_ASSOC);
-            return $rs;
         }
-
-        function getProductById($pid){
-            $query = "CALL getProductById(?);";
-            $stament = $this->pdo->prepare($query);
-            $stament->execute([$pid]);
-            $rs = $stament->fetchAll(PDO::FETCH_ASSOC);
-            return $rs;
+        
+        function prepareQuery($query){
+            // using when the params in the query is a number or the executeQuery() way can't be done
+            return $this->pdo->prepare($query);
+            // return the stament;
         }
-
     }
 ?>

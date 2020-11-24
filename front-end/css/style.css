@@ -106,8 +106,10 @@ ul {
 }
 
 .producer-list {
-  display: flex;
-  flex-wrap: wrap;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(190px, auto));
+  grid-template-rows: auto auto;
 }
 
 .producer-list li {
@@ -121,6 +123,8 @@ ul {
 }
 
 .hidden-producer {
+  grid-row: 2/-1;
+  width: 100%;
   display: none;
 }
 /* ========== Banner =========*/

@@ -14,7 +14,10 @@
 </head>
 
 <body>
-    <?php require "./back-end/DbServices.php"; ?>
+    <?php 
+        require "./back-end/Product_class.php";
+        require "./back-end/Category_class.php";
+    ?>
     <div class="container container--biggest">
         <header id="header">
             <?php include "./front-end/src/include/navbar.php" ?>

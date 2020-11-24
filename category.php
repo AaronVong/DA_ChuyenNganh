@@ -14,7 +14,9 @@
 
 <body>
     <?php 
-        require "./back-end/DbServices.php";
+        require "./back-end/Product_class.php";
+        require "./back-end/Category_class.php";
+        require "./back-end/Producer_class.php";
     ?>
     <div class="container container--biggest">
         <header id="header">
@@ -33,72 +35,23 @@
             <script src="./front-end/slick/slick.min.js"></script>
             <?php 
                 if(isset($_GET["type"])){
-                    $type = $_GET["type"];
-                    $service = new DbServices();
-                    $products = $service->getAllProductsByCategory($type);
+                    $catid = $_GET["type"];
+                    $_product = new Product();
+                    $products = $_product->getProductsByCategoryId($catid);
                     if(count($products)<=0){
-                        die("<h1>$type không có sản phẩm nào cả</h1>");
+                        die("<h1>$catid không có sản phẩm nào cả</h1>");
                     }
-                ?>
-             <div class="producer-navbar">
-                <ul class="producer-list">
-                    <li>
-                        <a href="<?php echo "category.php?type=".$type."&producer=samsung"; ?>" class="links">
-                            <img class="fluid-img" src="https://via.placeholder.com/220x48">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php echo "category.php?type=".$type."&producer=samsung"; ?>" class="links">
-                            <img class="fluid-img" src="https://via.placeholder.com/220x48">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php echo "category.php?type=".$type."&producer=samsung"; ?>" class="links">
-                            <img class="fluid-img" src="https://via.placeholder.com/220x48">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php echo "category.php?type=".$type."&producer=samsung"; ?>" class="links">
-                            <img class="fluid-img" src="https://via.placeholder.com/220x48">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php echo "category.php?type=".$type."&producer=samsung"; ?>" class="links">
-                            <img class="fluid-img" src="https://via.placeholder.com/220x48">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php echo "category.php?type=".$type."&producer=samsung"; ?>" class="links">
-                            <img class="fluid-img" src="https://via.placeholder.com/220x48">
-                        </a>
-                    </li>
-                    <button class="btn links--showmore showmore-producer">Xem thêm</button>
-                    <div class="hidden-producer">
-                        <ul class="producer-list">
-                            <li>
-                                <a href="<?php echo "category.php?type=".$type."&producer=samsung"; ?>" class="links">
-                                    <img class="fluid-img" src="https://via.placeholder.com/220x48">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?php echo "category.php?type=".$type."&producer=samsung"; ?>" class="links">
-                                    <img class="fluid-img" src="https://via.placeholder.com/220x48">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?php echo "category.php?type=".$type."&producer=samsung"; ?>" class="links">
-                                    <img class="fluid-img" src="https://via.placeholder.com/220x48">
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </ul>
-            </div>
+                    $_producer=new Producer();
+                    $producers = $_producer->getAllProducers();
+            ?>
+
+            <?php include "./front-end/src/include/producerNavbar.php"; ?>
+
             <div class="category">
                 <?php include "./front-end/src/include/products.php";?>
             </div>
             <?php
-                }else die("<h1>Trang Không tồn tại!</h1>");
+                }else exit("<h1>Trang Không tồn tại!</h1>");
             ?>
         </main>
         <footer id="footer"></footer>
