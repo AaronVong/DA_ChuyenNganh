@@ -40,6 +40,60 @@
                         die("<h1>$type không có sản phẩm nào cả</h1>");
                     }
                 ?>
+             <div class="producer-navbar">
+                <ul class="producer-list">
+                    <li>
+                        <a href="<?php echo "category.php?type=".$type."&producer=samsung"; ?>" class="links">
+                            <img class="fluid-img" src="https://via.placeholder.com/220x48">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo "category.php?type=".$type."&producer=samsung"; ?>" class="links">
+                            <img class="fluid-img" src="https://via.placeholder.com/220x48">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo "category.php?type=".$type."&producer=samsung"; ?>" class="links">
+                            <img class="fluid-img" src="https://via.placeholder.com/220x48">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo "category.php?type=".$type."&producer=samsung"; ?>" class="links">
+                            <img class="fluid-img" src="https://via.placeholder.com/220x48">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo "category.php?type=".$type."&producer=samsung"; ?>" class="links">
+                            <img class="fluid-img" src="https://via.placeholder.com/220x48">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo "category.php?type=".$type."&producer=samsung"; ?>" class="links">
+                            <img class="fluid-img" src="https://via.placeholder.com/220x48">
+                        </a>
+                    </li>
+                    <button class="btn links--showmore showmore-producer">Xem thêm</button>
+                    <div class="hidden-producer">
+                        <ul class="producer-list">
+                            <li>
+                                <a href="<?php echo "category.php?type=".$type."&producer=samsung"; ?>" class="links">
+                                    <img class="fluid-img" src="https://via.placeholder.com/220x48">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo "category.php?type=".$type."&producer=samsung"; ?>" class="links">
+                                    <img class="fluid-img" src="https://via.placeholder.com/220x48">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo "category.php?type=".$type."&producer=samsung"; ?>" class="links">
+                                    <img class="fluid-img" src="https://via.placeholder.com/220x48">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </ul>
+            </div>
             <div class="category">
                 <?php include "./front-end/src/include/products.php";?>
             </div>
@@ -49,6 +103,7 @@
         </main>
         <footer id="footer"></footer>
     </div>
+    <script src="./front-end/js/showmoreproducers.js"></script>
 </body>
 
 </html>

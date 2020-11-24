@@ -98,6 +98,31 @@ ul {
   color: black;
 }
 
+/* ========== Producers Nav ========== */
+.producer-navbar {
+  width: 100%;
+  border: 1px solid black;
+  padding: 1em 0;
+}
+
+.producer-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.producer-list li {
+  max-width: 190px;
+  margin-right: 10px;
+}
+.producer-list img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hidden-producer {
+  display: none;
+}
 /* ========== Banner =========*/
 #banner {
   width: 100%;
@@ -913,160 +938,4 @@ ul {
   text-align: center;
 }
 
-/* ========== Quản lý sản phẩm Screen ========== */
-.form--product {
-  width: 100%;
-  /* outline: 1px solid black; */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  min-height: 100px;
-  border-bottom: 1px solid black;
-}
-
-.inputs-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 1em;
-}
-.title--productmanager {
-  text-align: center;
-  font-size: 50px;
-  padding: 1rem 0;
-}
-
-.form--product .input-group {
-  display: flex;
-  flex-direction: column;
-  width: 200px;
-}
-
-.form--product .input {
-  height: 30px;
-  outline: 1px solid black;
-  border-radius: 0;
-  padding-right: 0;
-}
-
-.form--product .input[type="submit"] {
-  border: 1px solid black;
-  cursor: pointer;
-}
-
-.form--product .input[type="submit"]:hover {
-  background-color: silver;
-}
-
-.form--product .label {
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-}
-
-.select {
-  text-transform: capitalize;
-}
-.select {
-  text-transform: uppercase;
-}
-.table {
-  margin: 0 auto;
-}
-
-.table,
-tr,
-td,
-th {
-  border-collapse: collapse;
-  padding: 0.5em 0;
-}
-
-.table td {
-  border: 1px solid black;
-}
-
-.table--product tr td,
-.table--product tr th {
-  width: 200px;
-}
-
-.table td {
-  text-align: center;
-}
-
-.table--product {
-  position: relative !important;
-}
-.table--product thead {
-  position: sticky;
-  top: 0;
-  background-color: silver;
-  z-index: 2;
-}
-
-.table--product tbody tr:nth-child(even) {
-}
-.table--product tbody tr:nth-child(odd) {
-  background-color: rgb(230, 228, 228);
-}
-
-.table--product tr:nth-child(n + 2) {
-  background-color: red !important;
-}
-.totop {
-  position: fixed;
-  right: 50px;
-  bottom: 100px;
-  display: block;
-  width: 40px;
-  height: 40px;
-  background-color: black;
-  color: white;
-  text-align: center;
-  padding: 0.5em 0;
-  cursor: pointer;
-  text-transform: uppercase;
-  opacity: 0.6;
-}
-
-.invalid {
-  outline: 2px solid red;
-}
-.totop:hover {
-  opacity: 1;
-}
-
-.control-group {
-  padding: 1em;
-}
-
-.btn--submit {
-}
-
-.btn--delete {
-  background-color: var(--delete);
-}
-
-.btn--delete:hover {
-  background-color: var(--deletehover);
-}
-.btn-edit {
-}
-
-/* ========== Admin Login ========== */
-.form--adminlogin {
-  border: 1px solid black;
-  text-align: center;
-  padding: 1em 0;
-}
-
-.form--adminlogin .input-group .label {
-  display: inline-block;
-  width: 150px;
-  text-align: left;
-  text-transform: capitalize;
-  padding: 1em 0;
-}
-.form--adminlogin .input-group .input {
-  outline: 1px solid black;
-}
+/* ========== Admin ========== */
