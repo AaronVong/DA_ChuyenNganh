@@ -7,7 +7,7 @@
 - tông màu website chưa được tốt.
 - Banner Carousel và News là dữ liệu tĩnh.
 - chưa có sản phẩm liên quan, bình luận, đánh giá, trong phần chi tiết sản phẩm
-- giỏ hàng chưa có
+- giỏ hàng chưa có (DONE)
 - thanh tìm kiếm chưa có chức năng
 - cần style lại trang chi tiết sản phẩm.
 - Button mua ngay và giỏ hàng chưa có chức năng
