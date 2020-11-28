@@ -7,6 +7,7 @@
             if($this->pdo==null){
                try{
                     $this->pdo = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME,DB_USER, DB_PASSWORD, PDOATTRS);
+                    $this->pdo->query("set names utf8");
                }catch(PDOException $exception){
                     echo $exception->getMessage();
                } 

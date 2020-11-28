@@ -717,6 +717,49 @@ ul {
 .cart-btn:hover {
   background-color: rgb(21, 129, 84);
 }
+.commentField {
+  width: 90%;
+  border: 1px solid gray;
+  border-radius: 2px;
+  align-items: center;
+  margin-top: 50px;
+  box-shadow: 3px 3px 3px;
+  -moz-box-shadow: 3px 3px 3px;
+  -webkit-box-shadow: 3px 3px 3px;
+  -o-box-shadow: 3px 3px 3px;
+  -ms-box-shadow: 3px 3px 3px;
+  margin-left: 5%;
+  padding:10px 0;
+}
+.commentField .product__name {
+  font-weight: normal;
+  font-size: 30px;
+}
+
+.commentField div {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+.commentField textarea {
+  max-width: 100%;
+  min-width: 100%;
+  border-top: solid 1px gray;
+  border-bottom: solid 1px gray;
+ 
+}
+.commentField .ask {
+  text-decoration: none;
+  text-align: center;
+  border-radius: 5px;
+  background: rgb(170, 18, 18);
+  color: white;
+  height: 40px;
+  width: 100px;
+  cursor: pointer;
+  margin-bottom: 5px;
+  margin-top:2px;
+  margin-left: 90%;
+}
 
 @media (max-width: 1100px) {
   .detail__body {
