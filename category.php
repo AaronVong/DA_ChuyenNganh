@@ -17,6 +17,9 @@
         require "./back-end/Product_class.php";
         require "./back-end/Category_class.php";
         require "./back-end/Producer_class.php";
+        if(!isset($_SESSION)){
+            session_start();
+        }
     ?>
     <div class="container container--biggest">
         <header id="header">
@@ -31,22 +34,24 @@
                     <?php include "./front-end/src/include/news.php"?>
                 </div>
             </section>
-            <!-- Vì có die() nên đặt ở đây để không bị lỗi-->
-            <script src="./front-end/slick/slick.min.js"></script>
             <?php 
-                if(isset($_GET["type"])){
-                    $catid = $_GET["type"];
+                if(isset($_GET["catid"])){
+                    $catid = $_GET["catid"];
+                    $producerid = isset($_GET["producerid"])?$_GET["producerid"]:"";
                     $_product = new Product();
-                    $products = $_product->getProductsByCategoryId($catid);
-                    if(count($products)<=0){
-                        die("<h1>$catid không có sản phẩm nào cả</h1>");
+                    if($producerid!=="" && $catid!=="else"){
+                        $products = $_product->getProductsByCategoryIdAndProducerId($catid, $producerid);
+                    }else if($catid==="else"){
+                        $products=$_product->getAllHeadphoneAndPortableCharger();
+                    }else{
+                        $products = $_product->getProductsByCategoryId($catid);
                     }
-                    $_producer=new Producer();
-                    $producers = $_producer->getAllProducers();
+                    if(count($products)===0){
+                        echo "<h1 class='empty'>Không có sản phẩm nào cả</h1>";
+                    }
             ?>
 
             <?php include "./front-end/src/include/producerNavbar.php"; ?>
-
             <div class="category">
                 <?php include "./front-end/src/include/products.php";?>
             </div>
@@ -56,7 +61,11 @@
         </main>
         <footer id="footer"></footer>
     </div>
-    <script src="./front-end/js/showmoreproducers.js"></script>
+    <script src="./front-end/js/slickSetting.js"></script>
+    <script src="./front-end/slick/slick.min.js"></script>
+    <script src="./front-end/js/cartEvents.js"></script>
+    <script src="./front-end/js/hamburger.js"></script>
+<script src="./front-end/js/search.js"></script>
 </body>
 
 </html>

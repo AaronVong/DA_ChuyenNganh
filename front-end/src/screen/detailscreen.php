@@ -3,6 +3,8 @@
     $pid = $_GET["pid"];
     $_product = new Product();
     $productDetail = $_product->getProductById($pid);
+    $category_id = $productDetail[0]["category_id"];
+    $producer_id = $productDetail[0]["producer_id"];
     if(count($productDetail)<=0){
       exit("<h1>Không có kết quả phù hợp</h1>");
     }
@@ -98,18 +100,21 @@
             </ul>
           </div>
           <div class="detail__action">
-            <a href="order.php" class="pay-btn links" name="">
-                <span>Đặt Ngay</span>
-            </a>
-            <a class="cart-btn links" name="addToCart">
-                <span>thêm vào giỏ hàng</span>
-            </a>
+            <button pid ="<?php echo $pid;?>"type="button" class="pay-btn links" name="buyNow">
+                Đặt Ngay
+            </button>
+            <button type="button" class="cart-btn links" name="addToCart" pid="<?php echo $pid;?>">
+                Thêm vào giỏ hàng
+            </button>
           </div>
         </div>
       </div>
     </div>
     <section class="related_products">
-        <h3>Sản phẩm liên quan</h3>
-        <!-- thêm danh sách sản phẩm dạng Carousel ở đây-->
+        <h3 class="title title--related">sản phẩm liên quan</h3>
+        <?php 
+          $products = $_product->getProductsByCategoryIdAndProducerId($category_id, $producer_id);
+          include "./front-end/src/include/products.php";
+        ?>
     </section>
 </div>

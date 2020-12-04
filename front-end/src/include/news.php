@@ -1,8 +1,8 @@
 <?php
     $news=[
-        "Sam-samsung-398-110-398x110.png",
-        "398-110-398x110-1.png",
-        "Sam-samsung-398-110-398x110.png"
+        "637398677436892936_F-H2_385x100.png",
+        "637413952999516549_F-H2_385x100.png",
+        "398-110-398x110.png",
     ];
 ?>
 <article class="news">
@@ -13,7 +13,7 @@
     <?php
         foreach ($news as $image) {
     ?>
-        <a href="#news" class="post__links"><img class="fluid-img post__images" src="<?php echo "https://via.placeholder.com/398x110"; ?>"></a>
+        <a href="#news" class="post__links"><img class="fluid-img post__images" src="<?php echo "./front-end/images/salenews/$image"; ?>"></a>
     <?php
         }
     ?>

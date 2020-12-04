@@ -1,15 +1,17 @@
 $(document).ready(() => {
-  $(".showform").click(() => {
+  // hiệu ứng xuất hiện form điện thông tin khách hàng
+  $(".btn--showform").click(() => {
     $(".order__form").slideDown();
   });
 
-  $("input[name='location']").change((event) => {
-    console.log("change location");
+  // sự kiện thay đổi radio button trong form thông tin khách hàng
+  $("input[name='location[]']").change((event) => {
     const location = event.target.value;
     if (location === "other") {
       $("#address").slideDown();
-    } else {
-      $("#address").slideToggle();
+    }
+    if (location != "other") {
+      $("#address").slideUp();
     }
   });
 });

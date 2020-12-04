@@ -1,39 +1,12 @@
-<div class="producer-navbar">
-    <ul class="producer-list">
+
+    <ul class="navbar--producers">
 <?php
-    $perRow = 6;
-    $i=0;
-    $amount = count($producers);
-    while($i< $amount){
-        if($i >= $perRow){
-            break;
-        }
+    $_producer=new Producer();
+    $producers = $_producer->getAllProducersbyCatId($catid);
+    foreach ($producers as $producer) {
 ?>
-        <li>
-            <a href="<?php echo "category.php?type=".$catid."&producer=".$producers[$i]["producer_id"]; ?>" class="links">
-                <img class="fluid-img" src="<?php echo "./front-end/images/brands/".$producers[$i]["producer_thumb"];?>">
-            </a>
-        </li>
+        <li class="producer"><a href="<?php echo "category.php?catid=".$catid."&producerid=".$producer["producer_id"]; ?>" class="links"><img src="<?php echo "./front-end/images/brands/".$producer["producer_thumb"];?>"></a></li>
 <?php
-        $i++;
-    }
-    if($i >= $perRow){
-        echo "<button class=\"btn links--showmore showmore-producer\">Xem thêm</button>";
     }
 ?>
-        <div class="hidden-producer">
-<?php 
-    while($i < $amount){
-?>
-            <li>
-                <a href="<?php echo "category.php?type=".$catid."&producer=".$producers[$i]["producer_id"]; ?>" class="links">
-                    <img class="fluid-img" src="<?php echo "./front-end/images/brands/".$producers[$i]["producer_thumb"];?>">
-                </a>
-            </li>            
-<?php
-$i++;
-    }
-?>
-        </div>
     </ul>
-</div>

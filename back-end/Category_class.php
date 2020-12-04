@@ -3,10 +3,12 @@
     class Category extends DbServices{
         function getAllCategories(){
             $query = "SELECT * FROM tn_category";
-            $result = $this->executeQuery($query);
-            if($result===null){
-                die("Lỗi khi thực hiện câu truy vấn");
-            }
+            return $this->executeQuery($query);
+        }
+
+        function getCategoryByName($name){
+            $query = "SELECT * FROM tn_category WHERE category_name=:name";
+            $result = $this->executeQuery($query,[":name"=>$name]);
             return $result;
         }
     }

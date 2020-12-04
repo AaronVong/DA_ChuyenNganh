@@ -17,12 +17,16 @@
     <?php 
         require "./back-end/Product_class.php";
         require "./back-end/Category_class.php";
-        
-          if(count($_GET)===0){
-            $_product = new Product();
-            $products=$_product->getHighLightProducts();
+        if(!isset($_SESSION)){
+            session_start();
+        }
+
+        if(isset($_POST["signout"])){
+            unset($_SESSION["user"]);
+            exit("");
         }
     ?>
+    
     <div class="container container--biggest">
         <header id="header">
             <?php include "./front-end/src/include/navbar.php" ?>
@@ -41,6 +45,10 @@
         <footer id="footer"></footer>
     </div>
     <script src="./front-end/slick/slick.min.js"></script>
+    <script src="./front-end/js/cartEvents.js"></script>
+    <script src="./front-end/js/slickSetting.js"></script>
+    <script src="./front-end/js/hamburger.js"></script>
+<script src="./front-end/js/search.js"></script>
 </body>
 
 </html>

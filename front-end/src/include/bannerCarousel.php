@@ -22,4 +22,3 @@
         ?>
 </div>
 
-<script src="./front-end/js/slickSetting.js"></script>

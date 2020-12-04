@@ -2,29 +2,34 @@
     require_once "./back-end/DbServices.php";
     class Product extends DbServices{
         function getAllProducts(){
-            $query = "select * from tn_product";
+            $query = "SELECT product_id,product_name,product_thumb,product_originprice,product_sale,producer_name,category_name, status_name,product_ishighlight,product_instock FROM tn_product
+            INNER JOIN tn_producer ON tn_product.producer_id = tn_producer.producer_id
+            INNER JOIN tn_category ON tn_product.category_id = tn_category.category_id
+            INNER JOIN tn_status ON tn_status.status_id = tn_product.status_id       
+            ";
             $result = $this->executeQuery($query);
-            if($result===null){
-                die("Lỗi khi thực hiện câu truy vấn");
-            }
+            // if($result===null){
+            //     die("Lỗi khi thực hiện câu truy vấn");
+            // }
             return $result;
         }
 
-        function getHighlightProducts($number=4){
+        function getHighlightProducts($catid, $number=5){
             $query = "SELECT product_id,product_name,product_thumb,product_originprice,product_sale,producer_name,category_name FROM tn_product
             INNER JOIN tn_producer ON tn_product.producer_id = tn_producer.producer_id
             INNER JOIN tn_category ON tn_product.category_id = tn_category.category_id
-            WHERE tn_product.status_id = 1 AND tn_product.product_ishighlight = 1
+            WHERE tn_product.status_id = 1 AND tn_product.product_ishighlight = 1 AND tn_product.category_id = :catid
             LIMIT 0,:number";
             
             // because the param (:number) is a number, so it have to using prepareQuery() from the DbServices class
             // and then use method bindValue() like normal
             $stament = $this->prepareQuery($query);
             $stament->bindValue(':number',$number,PDO::PARAM_INT);
+            $stament->bindValue(":catid",$catid,PDO::PARAM_INT);
             $result = $stament->execute()?$stament->fetchAll():null;
-            if($result===null){
-                die("Lỗi khi thực hiện câu truy vấn");
-            }
+            // if($result===null){
+            //     die("Lỗi khi thực hiện câu truy vấn");
+            // }
             return $result;
         }
 
@@ -36,22 +41,134 @@
 
             $result = $this->executeQuery($query,[$categoryId]);
 
-            if($result===null){
-                die("Lỗi khi thực hiện câu truy vấn");
-            }
+            // if($result===null){
+            //     die("Lỗi khi thực hiện câu truy vấn");
+            // }
             return $result;
         }
 
+        function getProductsByCategoryIdAndProducerId($categoryId, $producerId){
+            $query = "SELECT product_id,product_name,product_thumb,product_originprice,product_sale,producer_name,category_name, tn_product.category_id, tn_product.producer_id FROM tn_product
+            INNER JOIN tn_producer ON tn_product.producer_id = tn_producer.producer_id
+            INNER JOIN tn_category ON tn_product.category_id = tn_category.category_id
+            WHERE tn_product.category_id=:catid AND tn_product.producer_id=:producerid";
+
+            $result = $this->executeQuery($query,[":catid"=>$categoryId, ":producerid"=>$producerId]);
+
+            // if($result===null){
+            //     die("Lỗi khi thực hiện câu truy vấn");
+            // }
+            return $result;
+        }
         function getProductbyId($id){
-            $query = "SELECT product_id,product_name,product_thumb,product_originprice,product_sale,producer_name,category_name,tn_product.category_id FROM tn_product
+            $query = "SELECT product_id,product_name,product_thumb,product_originprice,product_sale,producer_name,category_name,tn_product.category_id,tn_product.producer_id FROM tn_product
             INNER JOIN tn_producer ON tn_product.producer_id = tn_producer.producer_id
             INNER JOIN tn_category ON tn_product.category_id = tn_category.category_id
             WHERE product_id=:id";
             
             $result = $this->executeQuery($query, ["id"=>$id]);
-            if($result===null){
-                die("Lỗi khi thực hiện câu truy vấn");
+            // if($result===null){
+            //     die("Lỗi khi thực hiện câu truy vấn");
+            // }
+            return $result;
+        }
+
+        function addNewProduct($pname, $pthumb, $pprice,$psale,$pstock,$phighlight,$producerid,$categoryid,$statusid){
+            $query = "INSERT INTO tn_product(product_name,product_thumb,product_originprice,product_sale,product_instock,product_ishighlight,producer_id,category_id,status_id)
+            VALUES(:pname,:pthumb,:pprice,:psale,:pstock,:phighlight,:producerid,:catid,:statusid)";
+            if(strlen($pname)<=0)return 0;
+            $this->beginTransactionNow();
+            $rows = $this->executeChangeDataQuery($query, [":pname"=>$pname,":pthumb"=> $pthumb["name"],":pprice"=>$pprice,":psale"=>$psale,":pstock"=>$pstock,":phighlight"=>$phighlight,":producerid"=>$producerid,":catid"=>$categoryid,":statusid"=>$statusid]);
+            if($rows>0){
+                $pid = $this->lastIndexInserted();
+                $isSuccess=$this->uploadImage($pthumb,$pid);
+            }else{
+                $isSuccess=false;
             }
+
+            if($isSuccess==false){
+                $this->rollbackNow();
+                $rows=$isSuccess;
+                return $rows;
+            }
+            $this->commitNow();
+            return $rows;
+        }
+
+        function uploadImage($image, $pid){
+            $isSuccess=true;
+            if($image["tmp_name"]===''){
+                return 0;
+            }
+            $query = "SELECT producer_name,category_name FROM tn_product
+            JOIN tn_producer ON tn_product.producer_id = tn_producer.producer_id
+            JOIN tn_category ON tn_product.category_id = tn_category.category_id 
+            WHERE product_id=:pid";
+            $rs = $this->executeQuery($query,[":pid"=>$pid]);
+            if(count($rs)>0){
+                $target_dir = "front-end/images/products/".$rs[0]["producer_name"]."/".$rs[0]["category_name"]."s/";
+                $target_file = $target_dir . basename($image["name"]);
+                if($this->isImageExist($target_file)){
+                    return $isSuccess;
+                }
+                $isSuccess = move_uploaded_file($image["tmp_name"], $target_file);
+            }else{
+                $isSuccess=false;
+            }
+
+            return $isSuccess;
+        }
+
+        function deleteProductById($id){
+            $query = "DELETE FROM tn_product WHERE product_id=:id";
+            // $stament = $this->prepareQuery($query);
+            // $stament->bindValue(":id",$id);
+            // if($this->beginTransactionNow()){
+            //     echo "transaction begined";
+            // }else return;
+            // if($stament->execute()){
+            //     $this->commitNow();
+            // }else{
+            //     $this->rollbackNow();
+            // }
+            // return $stament->rowCount();
+            $deletedRows = $this->executeChangeDataQuery($query,[":id"=>"$id"]);
+            return $deletedRows;
+        }
+
+        function getAllHeadphoneAndPortableCharger(){
+            $query = "SELECT product_id,product_name,product_thumb,product_originprice,product_sale,producer_name,category_name, status_name,product_ishighlight,product_instock FROM tn_product
+            INNER JOIN tn_producer ON tn_product.producer_id = tn_producer.producer_id
+            INNER JOIN tn_category ON tn_product.category_id = tn_category.category_id
+            INNER JOIN tn_status ON tn_status.status_id = tn_product.status_id
+            WHERE category_name NOT LIKE 'laptop' and category_name NOT LIKE 'phone' AND category_name NOT LIKE 'tablet'
+            ";
+            $result = $this->executeQuery($query);
+            return $result;
+        }
+
+        function getAllHeadphoneAndPortableChargerIsHighlight(){
+            $query = "SELECT product_id,product_name,product_thumb,product_originprice,product_sale,producer_name,category_name, status_name,product_ishighlight,product_instock FROM tn_product
+            INNER JOIN tn_producer ON tn_product.producer_id = tn_producer.producer_id
+            INNER JOIN tn_category ON tn_product.category_id = tn_category.category_id
+            INNER JOIN tn_status ON tn_status.status_id = tn_product.status_id
+            WHERE category_name NOT LIKE 'laptop' and category_name NOT LIKE 'phone' AND category_name NOT LIKE 'tablet' AND product_ishighlight=1";
+            $result = $this->executeQuery($query);
+            return $result;
+        }
+
+        function searchProductsByName($key){
+            if($key===""){
+                return $this->getAllProducts();
+            }
+            $query = "SELECT product_id,product_name,product_thumb,product_originprice,product_sale,producer_name,category_name, status_name,product_ishighlight,product_instock FROM tn_product
+            INNER JOIN tn_producer ON tn_product.producer_id = tn_producer.producer_id
+            INNER JOIN tn_category ON tn_product.category_id = tn_category.category_id
+            INNER JOIN tn_status ON tn_status.status_id = tn_product.status_id
+            WHERE product_name LIKE :key OR producer_name LIKE :key OR category_name LIKE :key    
+            ";
+
+            $result = $this->executeQuery($query,["key"=>"%".$key."%"]);
             return $result;
         }
     }

@@ -12,15 +12,24 @@
     </li>
     <li class="searchbar">
       <div class="input-group">
-          <input class="input searchbar__input" placeholder="Bạn muốn tìm gì..." value="" name="searchKey">
+          <input class="input searchbar__input" placeholder="Bạn muốn tìm gì..." value="" name="searchKey" type="text">
       </div>
       <i class="search__icon fas fa-search"></i>
     </li>
     <li class="cart">
-      <a href="order.php" class="links links--cart" href="#asd">
+      <a href="order.php?" class="links links--cart" href="#asd">
         <span>Giỏ hàng</span>
         <i class="cart__icon fas fa-shopping-cart"></i>
       </a>
+    </li>
+    <li>
+    <?php 
+      if(isset($_SESSION["user"])){
+        include "./front-end/src/include/user.php";
+      }else{
+        echo "<a href='login.php' class='links links--login'><span>Đăng nhập</span></a>";
+      }
+    ?>
     </li>
     <button type="button" class="hamburger">
       <i class="fas fa-bars"></i>
@@ -31,11 +40,8 @@
     <?php 
       foreach ($cats as $cat) {
     ?>
-      <?php if($cat["category_name"]==="portable-charger"){
-        continue;
-      } ?>
       <li class="items sfloor__items">
-        <a href="<?php echo "category.php?type=".$cat["category_id"] ?>" class="links links--items" name="<?php echo $cat["category_name"];?>">
+        <a href="<?php echo "category.php?catid=".$cat["category_id"] ?>" class="links links--items" name="<?php echo $cat["category_name"];?>">
         <?php 
           switch($cat["category_name"]){
             case "phone":
@@ -64,5 +70,4 @@
     }
   ?>
 </ul>
-<script src="./front-end/js/hamburger.js"></script>
 </nav>
