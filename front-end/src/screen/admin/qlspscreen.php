@@ -1,6 +1,6 @@
 <?php     
     $services = new DbServices();
-    if(isset($_POST["add_product"])){
+    if(isset($_POST["add_product"]) || isset($_POST["confirm_edit_product"])){
         $error=[];
         $pname = $_POST["product_name"];
         if(strlen($pname)<10){
@@ -27,8 +27,13 @@
         }
 
         $psale = $_POST["product_sale"];
-        if($services->isValidNumber($psale)==false){
-            $error["sale"]="Sai định dạng";
+        if($services->isValidNumber($psale)==false||$psale==1||$psale==100){
+            $error["sale"]="Phần trăm không hợp lệ";
+        }else{
+            if(1-$psale < 0){
+                (float)$psale/=100;
+                $psale.="";
+            }
         }
         $pstock = $_POST["product_instock"];
         if($services->isValidNumber($pstock)==false){
@@ -38,8 +43,20 @@
         $producerid = $_POST["producer_id"];
         $categoryid = $_POST["category_id"];
         $statusid=$_POST["status_id"];
-        if(count($error)===0){
-            $count = $_product->addNewProduct($pname, $pthumb,$pprice,$psale,$pstock,$phighlight,$producerid,$categoryid,$statusid);
+
+
+        if(isset($_POST["add_product"])){
+            if(count($error)===0){
+                $count = $_product->addNewProduct($pname, $pthumb,$pprice,$psale,$pstock,$phighlight,$producerid,$categoryid,$statusid);
+            }
+        }
+
+        if(isset($_POST["confirm_edit_product"])){
+            if(count($error)===0){
+                $pid = $_POST["product_id"];
+                $updateCount = $_product->updateProduct($pid,$pname, $pthumb,$pprice,$psale,$pstock,$phighlight,$producerid,$categoryid,$statusid);
+                if($updateCount>0) header("admin.php?fnc=qlsp");
+            }
         }
     }
 
@@ -51,13 +68,19 @@
             echo "<script>setTimeout(()=>{window.location.reload();},1000)</script>";
         }
     }
+
+    if(isset($_POST["search_product"])){
+        $key = $_POST["search_product_key"];
+        $products = $_product->searchProductsByName($key);
+    }
 ?>
 
 <h1 class="function-title">Quán Lý Sản Phẩm</h1>
+<?php echo isset($_GET["editproduct"])?"<h1 class='notify__text'>Cập nhật sản phẩm có mã: ".$_GET["editproduct"]."</h1>":""?>
     <form action="admin.php?fnc=qlsp" method="post" class="admin-panel" enctype="multipart/form-data">
         <div class="control-group">
             <label class="label" for="product_id">Mã Sản Phẩm</label>
-            <input type="text" name="product_id" value="0" id="product_id" class="input input--text" disabled readonly>
+            <input type="text" name="product_id" value="<?php echo isset($_GET["editproduct"])?$_GET["editproduct"]:'';?>" id="product_id" class="input input--text" readonly>
         </div>
         <div class="control-group">
             <label class="label" for="product_name">Tên Sản Phẩm</label>
@@ -77,7 +100,7 @@
             <span class="notify__text"><?php echo isset($error["price"])?$error["price"]:""?></span>
         </div>
         <div class="control-group">
-            <label class="label" for="product_sale">Giảm Giá</label>
+            <label class="label" for="product_sale">Khuyến mãi (%)</label>
             <input type="text" name="product_sale" value="0" id="product_sale" class="input input--text">
             <span class="notify__text"><?php echo isset($error["sale"])?$error["sale"]:""?></span>
         </div>
@@ -113,7 +136,7 @@
                 <?php 
                     foreach($producers as $producer){
                 ?>
-                <option class="select__options" value="<?php echo $producer["producer_id"]; ?>"><?php echo $producer["producer_name"];?></option>
+                <option class="select__options" value="<?php echo $producer["producer_id"]; ?>" ><?php echo $producer["producer_name"];?></option>
                 <?php
                     }
                 ?>
@@ -132,10 +155,11 @@
             </select>
         </div>
         <div class="control-panel">
-            <input type="submit" name="add_product" class="" value="Thêm sản phẩm">      
+            <input type="submit" name="add_product" class="" value="Thêm sản phẩm">
+            <button type='submit' name='confirm_edit_product' <?php echo !isset($_GET["editproduct"])?'disabled':"";?> >Xác nhận sửa</button>
             <div class="search-panel" style="margin-left: auto;">
-                <input type="text" name="search_product" value="" placeholder="Tìm tên sản phẩm..." class="input input--text">
-                <button type="button">Tìm kiếm</button>
+                <input type="text" name="search_product_key" value="" placeholder="Tìm tên sản phẩm..." class="input input--text">
+                <input type="submit" class="btn--search" name="search_product" value="Tìm kiếm sản phẩm">
             </div>
         </div>
     </form>
@@ -149,6 +173,11 @@
                         echo "Lỗi file hình ảnh";
                     }else echo "Thêm thất bại";
                 }
+            ?>
+        </span>
+        <span class="notify__text">
+            <?php 
+                echo isset($_POST["confirm_edit_product"])?$updateCount>0?"Cập nhật thành công sản phẩm có mã: $pid":"Cập nhật sản phẩm thất bại":"";
             ?>
         </span>
     </div>
@@ -187,7 +216,10 @@
             <td><?php echo $product["status_name"];?></td>
             <td><?php echo $product["producer_name"];?></td>
             <td><?php echo $product["category_name"];?></td>
-            <td><a href="<?php echo "admin.php?fnc=qlsp&delete=".$product["product_id"]?>" type="submit" name="delete">Delete</a></td>
+            <td>
+                <a href="<?php echo "admin.php?fnc=qlsp&delete=".$product["product_id"]?>" type="submit" name="delete">Delete</a>
+                <a href="<?php echo "admin.php?fnc=qlsp&editproduct=".$product["product_id"]?>" name='edit_product'>Sửa</a>
+            </td>
         </tr>
         <?php
             }

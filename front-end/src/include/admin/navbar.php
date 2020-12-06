@@ -2,19 +2,14 @@
     <div class="navbar__right">
         <div class="admin">
             <button type="button" class="links admin__avatar btn">
-                <span class="links__text">Quyền Minh</span>
+                <span class="links__text"><?php echo $_SESSION["admin"]["name"];?></span>
                 <i class="fas fa-angle-down"></i>
             </button>
             <ul class="admin__menu">
-                <li class="menu__items"><a href="#" class="links" id="admin__info">
-                        <i class="fas fa-user-cog"></i>
-                        <span class="links__text">Information</span>
-                    </a>
-                </li>
                 <li class="menu__items">
-                    <a href="#" class="links" id="admin__logout">
+                    <a href="admin.php?fnc=signout" class="links" id="admin_signout">
                         <i class="fas fa-sign-out-alt"></i>
-                        <span class="links__text">LogOut</span>
+                        <span class="links__text">Sign out</span>
                     </a>
                 </li>
             </ul>
@@ -31,12 +26,6 @@
                     class="links__text">Quản lý Sản
                     Phẩm</span></a>
         </li>
-        <!-- <li class="nav__items">
-            <a href="admin.php?fnc=qlctsp" class="links">
-                <i class="fas fa-carrot"></i>
-                <span class="links__text">Quản lý Chi Tiết Sản Phẩm</span>
-            </a>
-        </li> -->
         <li class="nav__items">
             <a href="admin.php?fnc=qlloaisp" class="links">
                 <i class="fas fa-cat"></i>

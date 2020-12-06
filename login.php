@@ -12,7 +12,8 @@
 
 <body>
     <?php
-    
+    ob_start();
+    if(!isset($_SESSION)){session_start();}
     require_once "back-end/DbServices.php";
     require "back-end/Customer_class.php";
     $_customer= new Customer();
@@ -42,16 +43,13 @@
 
             if(!$errorExists){
                 $success = $_customer->signIn($email,$password);
-                var_dump($success);
-                if($success==1){
+                if($success==1||$success=='1'){
                     $_SESSION["user"]=["email"=>$email];
                     header("Location: index.php");
                 }
                 else{
                     $signinerror["signin"]="Mật khẩu hoặc email không đúng!";
                 }
-            }else{
-                $signinerror["signin"]="Mật khẩu hoặc email không đúng!";
             }
         }
 

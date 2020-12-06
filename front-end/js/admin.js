@@ -24,4 +24,16 @@ $(document).ready(() => {
       }
     );
   });
+
+  // $("#admin_signout").click(
+  //   () => {
+  //     console.log("clicked");
+  //     $.POST("admin.php", {
+  //       admin_signout: true,
+  //     });
+  //   },
+  //   function (data, status) {
+  //     window.location.reload();
+  //   }
+  // );
 });

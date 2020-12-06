@@ -10,20 +10,36 @@
     <script src="./front-end/js/functions.js"></script>
 </head>
 <body>
-    <?php 
+    <?php
+        ob_start();
+        if(!isset($_SESSION)){session_start();}
         require "./back-end/Category_class.php";
         require "./back-end/Producer_class.php";
         require "./back-end/Product_class.php";
         require "./back-end/Status_class.php";
         require "./back-end/Order_class.php";
         require "./back-end/Customer_class.php";
+        require "./back-end/Admin_class.php";
         $_order= new Order();
         $_customer = new Customer();
         $_producer= new Producer();
         $_product = new Product();
         $_category = new Category();
         $_status = new Status();
+        $_admin = new Admin();
+        if(isset($_POST["admin-signin"])){
+            $name = $_POST["adminname"];
+            $pass = $_POST["password"];
+            $signin = $_admin->signInAdmin($name,$pass); 
+            if($signin){
+                $_SESSION["admin"]=["name"=>$name];
+            }
+        }
 
+        if(!isset($_SESSION["admin"])){
+            include "./front-end/src/include/admin/login.php";
+            die();
+        }
     ?>
    <div class="container">
         <?php include "./front-end/src/include/admin/navbar.php";?>
@@ -49,14 +65,18 @@
                         include "./front-end/src/screen/admin/qlkhscreen.php";
                     }
                 break;
+                case 'signout':
+                    unset($_SESSION["admin"]);
+                    header('Location: admin.php');
+                break;
                     default:
                 break;
                 }
             ?>
         </main>
-        <footer>
-            <h1>Made By AaronVong</h1>
-        </footer>
+        <?php 
+            include "./front-end/src/include/footer.php";
+        ?>
    </div>
    <script src="./front-end/js/admin.js"></script>
 </body>

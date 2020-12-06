@@ -453,6 +453,10 @@ ul {
 /* ========== Second Floor Navbar ========== */
 .navbar--sfloor {
   background-color: var(--sfloor-navbar);
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+  transition: height 300ms ease;
 }
 .navbar--sfloor .items {
   list-style-type: none;
@@ -482,12 +486,16 @@ ul {
   color: var(--inputclr);
 }
 
+.toggleNav {
+  height: 210px !important;
+}
+
 @media (max-width: 800px) {
   .navbar--sfloor {
     width: 100vw;
+    height: 0%;
     position: absolute;
     flex-direction: column;
-    display: none;
     top: 100%;
     z-index: 10;
   }

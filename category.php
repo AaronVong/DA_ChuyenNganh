@@ -13,13 +13,12 @@
 </head>
 
 <body>
-    <?php 
+    <?php
+        ob_start();
+        if(!isset($_SESSION)){session_start();}
         require "./back-end/Product_class.php";
         require "./back-end/Category_class.php";
         require "./back-end/Producer_class.php";
-        if(!isset($_SESSION)){
-            session_start();
-        }
     ?>
     <div class="container container--biggest">
         <header id="header">
@@ -59,12 +58,14 @@
                 }else exit("<h1>Trang Không tồn tại!</h1>");
             ?>
         </main>
-        <footer id="footer"></footer>
+        <?php 
+            include "./front-end/src/include/footer.php";
+        ?>
     </div>
     <script src="./front-end/js/slickSetting.js"></script>
     <script src="./front-end/slick/slick.min.js"></script>
     <script src="./front-end/js/cartEvents.js"></script>
-    <script src="./front-end/js/hamburger.js"></script>
+    <script src="./front-end/js/navbar.js"></script>
 <script src="./front-end/js/search.js"></script>
 </body>
 

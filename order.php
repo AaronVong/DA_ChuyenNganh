@@ -11,6 +11,8 @@
 </head>
 <body>
     <?php 
+        ob_start();
+        if(!isset($_SESSION)){session_start();}
         require "./back-end/Category_class.php";
         require "./back-end/Product_class.php";
         require "./back-end/Order_class.php";
@@ -20,9 +22,6 @@
         $_order=new Order();
         $_status = new Status();
         $_customer= new Customer();
-        if(!isset($_SESSION)){
-            session_start();
-        }
     ?>
         <div class="container container--biggest">
         <header id="header">
@@ -31,7 +30,7 @@
         <main id="main">
                 <script src="./front-end/js/cartEvents.js"></script>
                 <script src="./front-end/js/showform.js"></script>
-                <script src="./front-end/js/hamburger.js"></script>
+                <script src="./front-end/js/navbar.js"></script>
                 <script src="./front-end/js/search.js"></script>
         <?php 
         // Nhận Request thêm sản phẩm vào giỏ hàng
@@ -170,7 +169,9 @@
             include "./front-end/src/screen/orderscreen.php";
         ?>
         </main>
-        <footer id="footer"></footer>
+        <?php 
+            include "./front-end/src/include/footer.php";
+        ?>
     </div>
 </body>
 </html>
